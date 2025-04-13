@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ mongoose
   });
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 app.listen(3000, () => {
@@ -24,9 +25,7 @@ app.listen(3000, () => {
 });
 
 app.use("/api/user", userRoutes);
-app.use("/api/user", authRoutes);
-
-
+app.use("/api/auth", authRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -34,6 +33,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({
     success: false,
     statusCode,
-    message
-  })
-})
+    message,
+  });
+});
