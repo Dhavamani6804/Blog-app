@@ -58,7 +58,12 @@ export default function SignUp() {
         <div className="flex-1">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
-              <Label value="Your username" />
+              <label
+                htmlFor="username"
+                className="text-sm font-medium text-gray-700"
+              >
+                Username
+              </label>
               <TextInput
                 type="text"
                 placeholder="Username"
@@ -67,7 +72,12 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <Label value="Your email" />
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
               <TextInput
                 type="email"
                 placeholder="name@company.com"
@@ -76,10 +86,15 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <Label value="Your password" />
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
               <TextInput
                 type="password"
-                placeholder="Password"
+                placeholder="********"
                 id="password"
                 onChange={handleChange}
               />
@@ -102,7 +117,7 @@ export default function SignUp() {
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
-            <Link to="/sign-in" className="text-blue-500">
+            <Link to="/signin" className="text-blue-500">
               Sign In
             </Link>
           </div>
