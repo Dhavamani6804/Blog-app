@@ -22,8 +22,10 @@ export default function SignUp() {
       const res = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
       if (data.success === false) {
         return setErrorMessage(data.message);
@@ -42,11 +44,13 @@ export default function SignUp() {
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
         {/* left */}
         <div className="flex-1">
-          <Link to="/" className="font-bold dark:text-white text-4xl">
-            <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-              Sahand's
+          <Link
+            to="/"
+            className="self-center whitespace-nowrap text-lg sm:text-xl font-semibold dark:text-white"
+          >
+            <span className="px-2 py-1 bg-gradient-to-r from-blue-400 via-blue-600 to-blue-800 rounded-lg text-white">
+              Dhava's Blog
             </span>
-            Blog
           </Link>
           <p className="text-sm mt-5">
             This is a demo project. You can sign up with your email and password
