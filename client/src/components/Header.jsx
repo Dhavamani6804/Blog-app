@@ -9,10 +9,17 @@ import {
   NavbarLink,
   NavbarToggle,
   NavbarCollapse,
+  Dropdown,
+  Avatar,
+  DropdownHeader,
+  DropdownItem,
+  DropdownDivider,
 } from "flowbite-react";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const location = useLocation().pathname;
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <Navbar className="border-b-2">
       <Link
@@ -39,11 +46,32 @@ export default function Header() {
         <Button className="w-12 h-10 hidden sm:inline" color="grey" pill>
           <FaMoon />
         </Button>
-        <Link to="/signin">
-          <Button gradientDuoTone="purpleToBlue" outline>
-            Sign In
-          </Button>
-        </Link>
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+            }
+          >
+            <DropdownHeader>
+              <span className="block text-sm">@{currentUser.username}</span>
+              <span className="block text-sm font-medium truncate">
+                {currentUser.email}
+              </span>
+            </DropdownHeader>
+            <Link to={"/dashboard?tab=profile"}>
+              <DropdownItem>Profile</DropdownItem>
+            </Link>
+            <DropdownDivider>
+              <DropdownItem>Sign out</DropdownItem>
+            </DropdownDivider>
+          </Dropdown>
+        ) : (
+          <Link to="/signin">
+            <Button outline>Sign In</Button>
+          </Link>
+        )}
 
         <NavbarToggle />
       </div>
