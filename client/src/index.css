@@ -2,8 +2,20 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import "flowbite";
+
+/* Light mode  */
+.bg-white {
+  background-color: white;
+}
+.text-gray-700 {
+  color: #3a414c;
+}
+
+/* Dark mode */
+.dark .bg-white {
+  background-color: rgb(16, 23, 42);
+}
+.dark .text-gray-700 {
+  color: #e5e7eb;
+}

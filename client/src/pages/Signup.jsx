@@ -27,9 +27,10 @@ export default function SignUp() {
       });
 
       const data = await res.json();
-      if (data.success === false) {
-        return setErrorMessage(data.message);
+      if (!data || data.success === false) {
+        return setErrorMessage(data?.message || "Something went wrong");
       }
+
       setLoading(false);
       if (res.ok) {
         navigate("/signin");
@@ -103,11 +104,7 @@ export default function SignUp() {
                 onChange={handleChange}
               />
             </div>
-            <Button
-              gradientDuoTone="purpleToPink"
-              type="submit"
-              disabled={loading}
-            >
+            <Button type="submit" disabled={loading}>
               {loading ? (
                 <>
                   <Spinner size="sm" />
