@@ -12,7 +12,7 @@ export default function DashProfile() {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
-  const { updateUserSuccess, setUpdateUserSuccess } = useState(null);
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const filePickerRef = useRef();
