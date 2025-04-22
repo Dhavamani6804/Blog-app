@@ -1,18 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import defaultAvatar from "../assets/user.png";
-import { Alert, Button, TextInput } from "flowbite-react";
+import {
+  Alert,
+  Button,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  TextInput,
+} from "flowbite-react";
 import {
   updateStart,
   updateSuccess,
   updateFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "../redux/user/userSlice";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export default function DashProfile() {
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const { currentUser, error } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
+  const [showModel, setShowModel] = useState(false);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const filePickerRef = useRef();
@@ -49,7 +61,6 @@ export default function DashProfile() {
     }
     if (imageFileUploading) {
       setUpdateUserError("Image is still uploading");
-
       return;
     }
     try {
@@ -73,6 +84,25 @@ export default function DashProfile() {
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    setShowModel(false);
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data));
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -92,7 +122,7 @@ export default function DashProfile() {
           onClick={() => filePickerRef.current?.click()}
         >
           <img
-            src={imageFileUrl || currentUser.profilePicture || defaultAvatar}
+            src={imageFileUrl || currentUser?.profilePicture || defaultAvatar}
             alt="User"
             className="rounded-full w-full h-full object-cover border-4 border-gray-300"
           />
@@ -101,14 +131,14 @@ export default function DashProfile() {
           type="text"
           id="username"
           placeholder="username"
-          defaultValue={currentUser.username}
+          defaultValue={currentUser?.username}
           onChange={handleChange}
         />
         <TextInput
           type="email"
           id="email"
           placeholder="email"
-          defaultValue={currentUser.email}
+          defaultValue={currentUser?.email}
           onChange={handleChange}
         />
         <TextInput
@@ -122,7 +152,9 @@ export default function DashProfile() {
         </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
-        <span className="cursor-pointer">Delete Account</span>
+        <span onClick={() => setShowModel(true)} className="cursor-pointer">
+          Delete Account
+        </span>
         <span className="cursor-pointer">Sign Out</span>
       </div>
       {updateUserSuccess && (
@@ -135,6 +167,39 @@ export default function DashProfile() {
           {updateUserError}
         </Alert>
       )}
+      {error && (
+        <Alert color="failure" className=" mt-5">
+          {error}
+        </Alert>
+      )}
+      <Modal
+        show={showModel}
+        onClose={() => setShowModel(false)}
+        popup
+        size="md"
+      >
+        <ModalHeader />
+        <ModalBody>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-500 mx-auto" />
+            <h3 className="mb-5 text-lg font-normal text-gray-400 dark:text-gray-500">
+              Are you sure you want to delete your account?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="red" onClick={handleDeleteUser}>
+                Yes, I'm sure
+              </Button>
+              <Button
+                color="gray"
+                onClick={() => setShowModel(false)}
+                className="ml-2"
+              >
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
     </div>
   );
 }
