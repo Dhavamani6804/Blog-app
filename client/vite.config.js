@@ -7,7 +7,7 @@ import flowbiteReact from "flowbite-react/plugin/vite";
 export default defineConfig({
   server: {
     proxy: {
-      api: {
+      "/api": {
         target: "http://localhost:3000",
         secure: false,
       },

@@ -16,7 +16,7 @@ import {
 } from "flowbite-react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
-//import { signoutSuccess } from "../redux/user/userSlice";
+import { signoutSuccess } from "../redux/user/userSlice";
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -118,7 +118,7 @@ export default function Header() {
             <DropdownItem onClick={handleSignout}>Sign out</DropdownItem>
           </Dropdown>
         ) : (
-          <Link to="/sign-in">
+          <Link to="/signin">
             <Button gradientDuoTone="purpleToBlue" outline>
               Sign In
             </Button>
