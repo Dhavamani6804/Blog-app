@@ -7,7 +7,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
-import OAuth from "../components/OAuth";
+//import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -18,6 +18,7 @@ export default function SignIn() {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = async (e) => {
+    console.log("submitted successfully");
     e.preventDefault();
     if (!formData.email || !formData.password) {
       return dispatch(signInFailure("Please fill all the fields"));
@@ -57,8 +58,8 @@ export default function SignIn() {
             Blog
           </Link>
           <p className="text-sm mt-5">
-            This is a demo project. You can sign in with your email and password
-            or with Google.
+            This is my blog where you can seek knowledge that I have learnt
+            recently. You can sign in with your email and password.
           </p>
         </div>
         {/* right */}
@@ -83,7 +84,10 @@ export default function SignIn() {
                 onChange={handleChange}
               />
             </div>
-            <Button className="rounded-tl-xl rounded-bl-none bg-gradient-to-r from-blue-800 via-blue-600 to-blue-500 rounded-lg rounded-br-xl w-full hover:from-blue-500 hover:via-blue-600 hover:to-blue-80 transform hover:scale-95 transition duration-300">
+            <Button
+              type="submit"
+              className="rounded-tl-xl rounded-bl-none bg-gradient-to-r from-blue-800 via-blue-600 to-blue-500 rounded-lg rounded-br-xl w-full hover:from-blue-500 hover:via-blue-600 hover:to-blue-80 transform hover:scale-95 transition duration-300"
+            >
               {loading ? (
                 <>
                   <Spinner size="sm" />

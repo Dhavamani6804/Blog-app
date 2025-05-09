@@ -1,7 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import OAuth from "../components/OAuth";
+//import OAuth from "../components/OAuth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -12,6 +12,7 @@ export default function SignUp() {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = async (e) => {
+    console.log("submitted successfully");
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
       return setErrorMessage("Please fill out all fields.");
@@ -52,8 +53,8 @@ export default function SignUp() {
             Blog
           </Link>
           <p className="text-sm mt-5">
-            This is a demo project. You can sign up with your email and password
-            or with Google.
+            This is my blog where you can seek knowledge that I have learnt
+            recently. You can sign up with your email and password.
           </p>
         </div>
         {/* right */}
@@ -87,7 +88,10 @@ export default function SignUp() {
                 onChange={handleChange}
               />
             </div>
-            <Button className="rounded-tl-xl rounded-bl-none bg-gradient-to-r from-blue-800 via-blue-600 to-blue-500 rounded-lg rounded-br-xl w-full hover:from-blue-500 hover:via-blue-600 hover:to-blue-80 transform hover:scale-95 transition duration-300">
+            <Button
+              type="submit"
+              className="rounded-tl-xl rounded-bl-none bg-gradient-to-r from-blue-800 via-blue-600 to-blue-500 rounded-lg rounded-br-xl w-full hover:from-blue-500 hover:via-blue-600 hover:to-blue-80 transform hover:scale-95 transition duration-300"
+            >
               {loading ? (
                 <>
                   <Spinner size="sm" />
